@@ -9,11 +9,15 @@ const longestLettersTD = document.querySelector('#longestLettersTD')
 const shortestWordsTD = document.querySelector('#shortestWordsTD')
 const shortestLettersTD = document.querySelector('#shortestLettersTD')
 let textProvidedByUser
+const mostFrequentLetterTD = document.querySelector('#mostFrequentLetterTD')
+const mostFrequentLetterAmountTD = document.querySelector('#mostFrequentLetterAmountTD')
+
 
 textArea.addEventListener('input', () => {
   textProvidedByUser = textArea.value
   findShortestWord()
   findLongestWord()
+  findMostFrequentLetter()
 })
 
 function findShortestWord() {
@@ -26,6 +30,18 @@ function findLongestWord() {
   const longestWord = sw.findLongestWord(textProvidedByUser)
   longestWordsTD.textContent = longestWord.words
   longestLettersTD.textContent = longestWord.numberOfLetters
+}
+
+function findMostFrequentLetter() {
+  const mostFrequentLetter = sw.mostFrequentLetter(textProvidedByUser)
+  if (mostFrequentLetter.length > 0) {
+    for (const [key, value] of Object.entries(mostFrequentLetter[0])) {
+      mostFrequentLetterTD.textContent = key
+      mostFrequentLetterAmountTD.textContent = value
+    }
+  }
+
+
 }
 
 /**
