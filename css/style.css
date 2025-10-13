@@ -1,0 +1,11 @@
+#editArea, textarea {
+  background-color: aqua;
+  width: 700px;
+  height: 400px;
+}
+
+table, td, th {
+  border-collapse: collapse;
+  border: 1px solid black;
+  padding: 2px 10px;
+}
