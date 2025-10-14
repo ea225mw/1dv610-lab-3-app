@@ -15,6 +15,9 @@ const mostFrequentLetterAmountTD = document.querySelector('#mostFrequentLetterAm
 
 textArea.addEventListener('input', () => {
   textProvidedByUser = textArea.value
+  if (textProvidedByUser === '') {
+    resetTable()
+  }
   findShortestWord()
   findLongestWord()
   findMostFrequentLetter()
@@ -22,14 +25,27 @@ textArea.addEventListener('input', () => {
 
 function findShortestWord() {
   const shortestWord = sw.findShortestWord(textProvidedByUser)
-  shortestWordsTD.textContent = shortestWord.words
-  shortestLettersTD.textContent = shortestWord.numberOfLetters
+  let newString = ''
+  for (const word of shortestWord.words) {
+    newString += word + ', '
+  }
+  shortestWordsTD.textContent = newString.slice(0, -2)
+  if (shortestWord.numberOfLetters > 0) {
+    shortestLettersTD.textContent = shortestWord.numberOfLetters
+  }
 }
 
 function findLongestWord() {
   const longestWord = sw.findLongestWord(textProvidedByUser)
-  longestWordsTD.textContent = longestWord.words
-  longestLettersTD.textContent = longestWord.numberOfLetters
+  let newString = ''
+  for (const word of longestWord.words) {
+    newString += word + ', '
+  }
+  longestWordsTD.textContent = newString.slice(0, -2)
+  if (longestWord.numberOfLetters > 0) {
+    longestLettersTD.textContent = longestWord.numberOfLetters
+  }
+
 }
 
 function findMostFrequentLetter() {
@@ -40,8 +56,11 @@ function findMostFrequentLetter() {
       mostFrequentLetterAmountTD.textContent = value
     }
   }
+}
 
-
+function resetTable() {
+  const allDataHolders = document.querySelectorAll('td.dataholder')
+  allDataHolders.forEach((td) => td.textContent = '')
 }
 
 /**
