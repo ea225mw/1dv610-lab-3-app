@@ -1,7 +1,13 @@
 #editArea, textarea {
-  background-color: aqua;
-  width: 700px;
+  background-color: white;
+  border: 1px solid black;
+  width: 800px;
   height: 400px;
+  overflow: auto;
+}
+
+.longestWord {
+  background-color: aqua;
 }
 
 table, td, th {
@@ -15,3 +21,4 @@ caption {
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
+
