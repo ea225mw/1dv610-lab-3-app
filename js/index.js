@@ -11,11 +11,16 @@ const shortestLettersTD = document.querySelector('#shortestLettersTD')
 const mostFrequentLetterTD = document.querySelector('#mostFrequentLetterTD')
 const mostFrequentLetterAmountTD = document.querySelector('#mostFrequentLetterAmountTD')
 const editArea = document.querySelector('#editArea')
+const phraseCountForm = document.querySelector('#phraseCountForm')
+const phraseInput = document.querySelector('#phraseInput')
+const phraseCountResultDiv = document.querySelector('#phraseCountResultDiv')
 
 let cleanedTextToAnalyze = ''
 let shortestWordObject
 let longestWordObject
+let phrase = ''
 
+/* --------------- EVENT LISTENERS ----------------- */
 editArea.addEventListener('input', () => {
   cleanedTextToAnalyze = removeHtmlAndKeepPureText()
 
@@ -27,6 +32,14 @@ editArea.addEventListener('input', () => {
   findShortestWord()
   findLongestWord()
   findMostFrequentLetter()
+})
+
+phraseCountForm.addEventListener('submit', (event) => {
+  event.preventDefault()
+  cleanedTextToAnalyze = removeHtmlAndKeepPureText()
+  const numberOfOccurances = countSpecifiedPhrase()
+
+  phraseCountResultDiv.textContent = `The phrase \"${phrase}\" occurs ${numberOfOccurances} times.`
 })
 
 function removeHtmlAndKeepPureText() {
@@ -79,6 +92,11 @@ function findMostFrequentLetter() {
 function resetTable() {
   const allDataHolders = document.querySelectorAll('td.dataholder')
   allDataHolders.forEach((dataholder) => dataholder.textContent = '')
+}
+
+function countSpecifiedPhrase() {
+  phrase = phraseInput.value
+  return sw.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
 }
 
 /*
