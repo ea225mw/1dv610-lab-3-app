@@ -1,8 +1,6 @@
-import { stringWorks } from 'https://cdn.jsdelivr.net/npm/string-works@0.1.2/+esm'
 import { StringAnalyzer } from './StringAnalyzer.js'
 import { ViewHandler } from './ViewHandler.js'
 
-const sw = stringWorks
 const stringAnalyzer = new StringAnalyzer
 const viewHandler = new ViewHandler
 
@@ -19,10 +17,6 @@ const phraseInput = document.querySelector('#phraseInput')
 export const phraseCountResultDiv = document.querySelector('#phraseCountResultDiv')
 
 let cleanedTextToAnalyze = ''
-let shortestWordObject
-let longestWordObject
-let mostFrequentLetterObject
-let phrase = ''
 
 /* --------------- EVENT LISTENERS ----------------- */
 editArea.addEventListener('input', () => {
@@ -32,26 +26,29 @@ editArea.addEventListener('input', () => {
     resetTable()
     editArea.innerHTML = ''
   }
-
-  shortestWordObject = stringAnalyzer.findShortestWord(cleanedTextToAnalyze)
-  viewHandler.updateShortestWordInTable(shortestWordObject)
-
-  longestWordObject = stringAnalyzer.findLongestWord(cleanedTextToAnalyze)
-  viewHandler.updateLongestWordInTable(longestWordObject)
-
-  mostFrequentLetterObject = stringAnalyzer.findMostFrequentLetter(cleanedTextToAnalyze)
-  viewHandler.updateMostFrequentLetterInTable(mostFrequentLetterObject)
+  mainFunction()
 })
 
 phraseCountForm.addEventListener('submit', (event) => {
   event.preventDefault()
+
   const phrase = phraseInput.value
-  // cleanedTextToAnalyze = removeHtmlAndKeepPureText()
   const numberOfOccurances = stringAnalyzer.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
   viewHandler.updatePhraseCountResult(numberOfOccurances, phrase)
-
-
 })
+
+/* --------------- FUNCTIONS --------------- */
+
+function mainFunction() {
+  const shortestWordObject = stringAnalyzer.findShortestWord(cleanedTextToAnalyze)
+  viewHandler.updateShortestWordInTable(shortestWordObject)
+
+  const longestWordObject = stringAnalyzer.findLongestWord(cleanedTextToAnalyze)
+  viewHandler.updateLongestWordInTable(longestWordObject)
+
+  const mostFrequentLetterObject = stringAnalyzer.findMostFrequentLetter(cleanedTextToAnalyze)
+  viewHandler.updateMostFrequentLetterInTable(mostFrequentLetterObject)
+}
 
 function removeHtmlAndKeepPureText() {
   const textWithHtmlTags = editArea.innerHTML
@@ -68,8 +65,6 @@ function resetTable() {
   const allDataHolders = document.querySelectorAll('td.dataholder')
   allDataHolders.forEach((dataholder) => dataholder.textContent = '')
 }
-
-
 
 /*
 function colorizeLongestWord() {
