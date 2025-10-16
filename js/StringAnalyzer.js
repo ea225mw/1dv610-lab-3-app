@@ -14,6 +14,10 @@ export class StringAnalyzer {
     return sw.mostFrequentLetter(cleanedTextToAnalyze)
   }
 
+  findMostFrequentLetterCaseSens(cleanedTextToAnalyze) {
+    return sw.mostFrequentLetterCS(cleanedTextToAnalyze)
+  }
+
   countSpecifiedPhrase(cleanedTextToAnalyze, phrase) {
     phrase = phraseInput.value
     return sw.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)

@@ -1,4 +1,12 @@
-import { shortestWordsTD, shortestLettersTD, longestWordsTD, longestLettersTD, mostFrequentLetterTD, mostFrequentLetterAmountTD, phraseCountResultDiv } from "./index.js";
+// Import HTML elements from index.js
+import {
+  shortestWordsTD, shortestLettersTD,
+  longestWordsTD, longestLettersTD,
+  mostFrequentLetterTD, mostFrequentLetterAmountTD,
+  mostFrequentLetterCS_TD, mostFrequentLetterAmountCS_TD,
+  phraseCountResultDiv
+}
+  from "./index.js";
 
 export class ViewHandler {
 
@@ -19,16 +27,40 @@ export class ViewHandler {
   }
 
   updateMostFrequentLetterInTable(mostFrequentLetterObject) {
+    let preparedObjectData
+
     if (mostFrequentLetterObject.length > 0) {
-      for (const [key, value] of Object.entries(mostFrequentLetterObject[0])) {
-        mostFrequentLetterTD.textContent = key
-        mostFrequentLetterAmountTD.textContent = value
-      }
+      preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterObject)
     }
+    mostFrequentLetterTD.textContent = preparedObjectData.concatString
+    mostFrequentLetterAmountTD.textContent = preparedObjectData.occurances
+  }
+
+  updateMostFrequentLetterCaseSensInTable(mostFrequentLetterCaseSensObject) {
+    let preparedObjectData
+
+    if (mostFrequentLetterCaseSensObject.length > 0) {
+      preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterCaseSensObject)
+    }
+    mostFrequentLetterCS_TD.textContent = preparedObjectData.concatString
+    mostFrequentLetterAmountCS_TD.textContent = preparedObjectData.occurances
   }
 
   updatePhraseCountResult(numberOfOccurances, phrase) {
     phraseCountResultDiv.textContent = `The phrase \"${phrase}\" occurs ${numberOfOccurances} times.`
+  }
+
+  #prepareFrequentLetterData(object) {
+    let concatString = ''
+    let occurances
+
+    object.forEach((element) => {
+      for (const [key, value] of Object.entries(element)) {
+        concatString += key + ', '
+        occurances = value
+      }
+    })
+    return { concatString: concatString.slice(0, -2), occurances: occurances }
   }
 
   #prepareTableText(array) {

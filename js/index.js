@@ -11,6 +11,8 @@ export const shortestWordsTD = document.querySelector('#shortestWordsTD')
 export const shortestLettersTD = document.querySelector('#shortestLettersTD')
 export const mostFrequentLetterTD = document.querySelector('#mostFrequentLetterTD')
 export const mostFrequentLetterAmountTD = document.querySelector('#mostFrequentLetterAmountTD')
+export const mostFrequentLetterCS_TD = document.querySelector('#mostFrequentLetterCS_TD')
+export const mostFrequentLetterAmountCS_TD = document.querySelector('#mostFrequentLetterAmountCS_TD')
 const editArea = document.querySelector('#editArea')
 const phraseCountForm = document.querySelector('#phraseCountForm')
 const phraseInput = document.querySelector('#phraseInput')
@@ -23,7 +25,7 @@ editArea.addEventListener('input', () => {
   cleanedTextToAnalyze = removeHtmlAndKeepPureText()
 
   if (cleanedTextToAnalyze === '' || editArea.textContent === '') {
-    resetTable()
+    resetStatistics()
     editArea.innerHTML = ''
   }
   mainFunction()
@@ -32,9 +34,11 @@ editArea.addEventListener('input', () => {
 phraseCountForm.addEventListener('submit', (event) => {
   event.preventDefault()
 
-  const phrase = phraseInput.value
-  const numberOfOccurances = stringAnalyzer.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
-  viewHandler.updatePhraseCountResult(numberOfOccurances, phrase)
+  if (cleanedTextToAnalyze !== '' || editArea.textContent !== '') {
+    const phrase = phraseInput.value
+    const numberOfOccurances = stringAnalyzer.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
+    viewHandler.updatePhraseCountResult(numberOfOccurances, phrase)
+  }
 })
 
 /* --------------- FUNCTIONS --------------- */
@@ -48,6 +52,9 @@ function mainFunction() {
 
   const mostFrequentLetterObject = stringAnalyzer.findMostFrequentLetter(cleanedTextToAnalyze)
   viewHandler.updateMostFrequentLetterInTable(mostFrequentLetterObject)
+
+  const mostFrequentLetterCaseSensObject = stringAnalyzer.findMostFrequentLetterCaseSens(cleanedTextToAnalyze)
+  viewHandler.updateMostFrequentLetterCaseSensInTable(mostFrequentLetterCaseSensObject)
 }
 
 function removeHtmlAndKeepPureText() {
@@ -61,9 +68,10 @@ function removeHtmlAndKeepPureText() {
     .replace(/&nbsp/g, '')
 }
 
-function resetTable() {
+function resetStatistics() {
   const allDataHolders = document.querySelectorAll('td.dataholder')
   allDataHolders.forEach((dataholder) => dataholder.textContent = '')
+  phraseCountResultDiv.textContent = ''
 }
 
 /*

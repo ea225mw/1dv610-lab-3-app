@@ -10,42 +10,49 @@
 </head>
 
 <body>
-  <!-- <div id="editArea" contenteditable="true"></div> -->
-  <!--<textarea name="textarea"></textarea> -->
-  <div contenteditable="true" id="editArea"></div>
-  <table>
-    <caption>Words and letters</caption>
-    <tr>
-      <th></th>
-      <th>Words</th>
-      <th>Letters</th>
-    </tr>
-    <tr>
-      <td>Shortest words</td>
-      <td id="shortestWordsTD" class="dataholder"></td>
-      <td id="shortestLettersTD" class="dataholder"></td>
-    </tr>
-    <tr>
-      <td>Longest words</td>
-      <td id="longestWordsTD" class="dataholder"></td>
-      <td id="longestLettersTD" class="dataholder"></td>
-    </tr>
-    <tr>
-      <td>Most frequent letter</td>
-      <td id="mostFrequentLetterTD" class="dataholder"></td>
-      <td id="mostFrequentLetterAmountTD" class="dataholder"></td>
-    </tr>
-  </table>
-
-  <div id="phraseCountDiv">
-    <h2>Count specified phrase</h2>
-    <p>Type a phrase or a single letter to see the number of occurances of that phrase in the text.</p>
-    <form id="phraseCountForm">
-      <input type="text" name="phrase" id="phraseInput">
-      <button type="submit">Count</button>
-    </form>
-    <div id="phraseCountResultDiv"></div>
-  </div>
+  <main>
+    <h1>String Works Editor</h1>
+    <div contenteditable="true" id="editArea"></div>
+    <div class="sections">
+      <table>
+        <caption>Words and letters</caption>
+        <tr>
+          <th></th>
+          <th>Words</th>
+          <th>Letters</th>
+        </tr>
+        <tr>
+          <td>Shortest words</td>
+          <td id="shortestWordsTD" class="dataholder"></td>
+          <td id="shortestLettersTD" class="dataholder"></td>
+        </tr>
+        <tr>
+          <td>Longest words</td>
+          <td id="longestWordsTD" class="dataholder"></td>
+          <td id="longestLettersTD" class="dataholder"></td>
+        </tr>
+        <tr>
+          <td>Most frequent letter</td>
+          <td id="mostFrequentLetterTD" class="dataholder"></td>
+          <td id="mostFrequentLetterAmountTD" class="dataholder"></td>
+        </tr>
+        <tr>
+          <td>Most frequent letter <br>(case sensitive)</td>
+          <td id="mostFrequentLetterCS_TD" class="dataholder"></td>
+          <td id="mostFrequentLetterAmountCS_TD" class="dataholder"></td>
+        </tr>
+      </table>
+    </div>
+    <div id="phraseCountDiv" class="sections">
+      <h2>Count specified phrase</h2>
+      <p>Type a phrase or a single letter to see the number of occurances of that phrase in the text.</p>
+      <form id="phraseCountForm">
+        <input type="text" name="phrase" id="phraseInput">
+        <button type="submit">Count</button>
+      </form>
+      <div id="phraseCountResultDiv"></div>
+    </div>
+  </main>
 </body>
 
 </html>
