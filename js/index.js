@@ -3,17 +3,27 @@ import { ViewHandler } from './ViewHandler.js'
 
 const stringAnalyzer = new StringAnalyzer
 const viewHandler = new ViewHandler
+let ascendingOrder = true
 
 // ---------- DOM References ----------
 export const longestWordsTD = document.querySelector('#longestWordsTD')
 export const longestLettersTD = document.querySelector('#longestLettersTD')
+
 export const shortestWordsTD = document.querySelector('#shortestWordsTD')
 export const shortestLettersTD = document.querySelector('#shortestLettersTD')
+
 export const mostFrequentLetterTD = document.querySelector('#mostFrequentLetterTD')
 export const mostFrequentLetterAmountTD = document.querySelector('#mostFrequentLetterAmountTD')
+
 export const mostFrequentLetterCS_TD = document.querySelector('#mostFrequentLetterCS_TD')
 export const mostFrequentLetterAmountCS_TD = document.querySelector('#mostFrequentLetterAmountCS_TD')
+
+export const sortedWordsDiv = document.querySelector('#sortedWordsDiv')
+
 const editArea = document.querySelector('#editArea')
+
+const radioButtonsDiv = document.querySelector('#radioButtonsDiv')
+
 const phraseCountForm = document.querySelector('#phraseCountForm')
 const phraseInput = document.querySelector('#phraseInput')
 export const phraseCountResultDiv = document.querySelector('#phraseCountResultDiv')
@@ -41,6 +51,13 @@ phraseCountForm.addEventListener('submit', (event) => {
   }
 })
 
+radioButtonsDiv.addEventListener('click', (event) => {
+  const target = event.target.closest('input')
+  if (target !== null) {
+    setSortOrder(target.value)
+  }
+})
+
 /* --------------- FUNCTIONS --------------- */
 
 function mainFunction() {
@@ -55,6 +72,26 @@ function mainFunction() {
 
   const mostFrequentLetterCaseSensObject = stringAnalyzer.findMostFrequentLetterCaseSens(cleanedTextToAnalyze)
   viewHandler.updateMostFrequentLetterCaseSensInTable(mostFrequentLetterCaseSensObject)
+
+  getSortedWords()
+}
+
+function setSortOrder(value) {
+  if (value === 'ascending') {
+    ascendingOrder = true
+  } else {
+    ascendingOrder = false
+  }
+}
+
+function getSortedWords() {
+  let sortedWords
+  if (ascendingOrder) {
+    sortedWords = stringAnalyzer.sortWordsAscending(cleanedTextToAnalyze)
+  } else {
+    sortedWords = stringAnalyzer.sortWordsDescending(cleanedTextToAnalyze)
+  }
+  viewHandler.updateSortedWords(sortedWords)
 }
 
 function removeHtmlAndKeepPureText() {

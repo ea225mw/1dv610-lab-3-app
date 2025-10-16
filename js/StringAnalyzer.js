@@ -22,4 +22,12 @@ export class StringAnalyzer {
     phrase = phraseInput.value
     return sw.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
   }
+
+  sortWordsAscending(cleanedTextToAnalyze) {
+    return sw.sortWordsAscending(cleanedTextToAnalyze)
+  }
+
+  sortWordsDescending(cleanedTextToAnalyze) {
+    return sw.sortWordsDescending(cleanedTextToAnalyze)
+  }
 }

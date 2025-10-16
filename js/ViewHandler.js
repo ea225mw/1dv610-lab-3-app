@@ -4,9 +4,10 @@ import {
   longestWordsTD, longestLettersTD,
   mostFrequentLetterTD, mostFrequentLetterAmountTD,
   mostFrequentLetterCS_TD, mostFrequentLetterAmountCS_TD,
-  phraseCountResultDiv
+  phraseCountResultDiv,
+  sortedWordsDiv
 }
-  from "./index.js";
+  from "./index.js"
 
 export class ViewHandler {
 
@@ -48,6 +49,10 @@ export class ViewHandler {
 
   updatePhraseCountResult(numberOfOccurances, phrase) {
     phraseCountResultDiv.textContent = `The phrase \"${phrase}\" occurs ${numberOfOccurances} times.`
+  }
+
+  updateSortedWords(sortedWordsArray) {
+    sortedWordsDiv.textContent = sortedWordsArray.toString()
   }
 
   #prepareFrequentLetterData(object) {

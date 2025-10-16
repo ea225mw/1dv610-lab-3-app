@@ -1,5 +1,4 @@
 body {
-  box-sizing: border-box;
   font-size: 18px;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background-color: #ED775A;
@@ -11,6 +10,8 @@ main {
 }
 
 #editArea {
+  box-sizing: border-box;
+  padding: 1rem;
   background-color: white;
   border: 5px solid #E4004B;
   width: 45rem;
@@ -37,7 +38,6 @@ table, td, th {
 caption {
   text-align: left;
   font-weight: 600;
-  margin-bottom: 0.5rem;
 }
 
 h2, caption {
@@ -51,6 +51,7 @@ p {
 }
 
 .sections {
+  box-sizing: border-box;
   background-color: #FAD691;
   padding: 1rem;
   border: solid #E4004B 0.5rem;
@@ -59,3 +60,10 @@ p {
   width: 45rem;
 }
 
+th:nth-child(2) {
+  min-width: 10rem;
+}
+
+input[type="radio"] {
+margin-right: 1.5rem;
+}
