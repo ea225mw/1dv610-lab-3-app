@@ -20,21 +20,11 @@ DOM_Ref.editArea.addEventListener('input', () => {
 
 DOM_Ref.phraseCountForm.addEventListener('submit', (event) => {
   event.preventDefault()
-
-  if (cleanedTextToAnalyze !== '' || editArea.textContent !== '') {
-    const phrase = DOM_Ref.phraseInput.value
-    const numberOfOccurances = stringAnalyzer.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
-    viewHandler.updatePhraseCountResult(numberOfOccurances, phrase)
-  }
+  submitPhraseCountForm()
 })
 
 DOM_Ref.sortChoicesDiv.addEventListener('click', (event) => {
-  const target = event.target.closest('input')
-  if (target !== null && target.value !== 'skipDuplicates') {
-    setSortOrder(target.value)
-  } else if (target !== null && target.value === 'skipDuplicates') {
-    getSortedWords()
-  }
+  handleSortChoices(event)
 })
 
 DOM_Ref.updateSortedWordsButton.addEventListener('click', () => {
@@ -61,6 +51,23 @@ function mainFunction() {
 
   const numberOfTotalLetters = stringAnalyzer.countTotalLetters(cleanedTextToAnalyze)
   viewHandler.updateTotalLetterCount(numberOfTotalLetters)
+}
+
+function submitPhraseCountForm() {
+  if (cleanedTextToAnalyze !== '' || editArea.textContent !== '') {
+    const phrase = DOM_Ref.phraseInput.value
+    const numberOfOccurances = stringAnalyzer.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
+    viewHandler.updatePhraseCountResult(numberOfOccurances, phrase)
+  }
+}
+
+function handleSortChoices(event) {
+  const target = event.target.closest('input')
+  if (target !== null && target.value !== 'skipDuplicates') {
+    setSortOrder(target.value)
+  } else if (target !== null && target.value === 'skipDuplicates') {
+    getSortedWords()
+  }
 }
 
 function setSortOrder(value) {
