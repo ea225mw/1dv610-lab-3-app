@@ -5,6 +5,9 @@ body {
 }
 
 main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: 60vw;
   margin: 0 auto;
 }
@@ -19,6 +22,7 @@ main {
   overflow: auto;
   /*box-shadow: 0.5rem 0.5rem 1rem #FAD691 ;*/
   margin-bottom: 2rem;
+  text-wrap: wrap;
 }
 
 #editArea:focus {
@@ -38,9 +42,11 @@ table, td, th {
 caption {
   text-align: left;
   font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
 }
 
-h2, caption {
+h2 {
   font-size: 1.8rem;
   margin: 8px 0;
 }
@@ -60,10 +66,35 @@ p {
   width: 45rem;
 }
 
-th:nth-child(2) {
-  min-width: 10rem;
-}
-
 input[type="radio"] {
 margin-right: 1.5rem;
+}
+
+#radioButtonsDiv {
+  margin-bottom: 1.5rem;
+}
+
+#updateSortedWordsButton {
+  margin-right: 1.5rem;
+}
+
+#sortedWordsDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  overflow-x: auto;
+}
+
+.flexDirectionRow {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.tableColumn1 {
+  width: 8rem;
+}
+
+.tableColumn2 {
+  min-width: 8rem;
 }

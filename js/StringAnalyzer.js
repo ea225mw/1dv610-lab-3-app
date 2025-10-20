@@ -1,4 +1,4 @@
-import { stringWorks } from 'https://cdn.jsdelivr.net/npm/string-works@0.1.2/+esm'
+import { stringWorks } from 'https://cdn.jsdelivr.net/npm/string-works@0.1.3/+esm'
 const sw = stringWorks
 
 export class StringAnalyzer {
@@ -29,5 +29,13 @@ export class StringAnalyzer {
 
   sortWordsDescending(cleanedTextToAnalyze) {
     return sw.sortWordsDescending(cleanedTextToAnalyze)
+  }
+
+  countWords(cleanedTextToAnalyze) {
+    return sw.countWords(cleanedTextToAnalyze)
+  }
+
+  countTotalLetters(cleanedTextToAnalyze) {
+    return sw.countLetters(cleanedTextToAnalyze)
   }
 }

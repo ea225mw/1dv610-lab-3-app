@@ -1,11 +1,12 @@
-// Import HTML elements from index.js
+// Import HTML element referencess from index.js
 import {
   shortestWordsTD, shortestLettersTD,
   longestWordsTD, longestLettersTD,
   mostFrequentLetterTD, mostFrequentLetterAmountTD,
   mostFrequentLetterCS_TD, mostFrequentLetterAmountCS_TD,
   phraseCountResultDiv,
-  sortedWordsDiv
+  sortedWordsDiv,
+  numberOfWordsDiv, numberOfLettersDiv
 }
   from "./index.js"
 
@@ -28,23 +29,19 @@ export class ViewHandler {
   }
 
   updateMostFrequentLetterInTable(mostFrequentLetterObject) {
-    let preparedObjectData
-
     if (mostFrequentLetterObject.length > 0) {
-      preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterObject)
+      const preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterObject)
+      mostFrequentLetterTD.textContent = preparedObjectData.concatString
+      mostFrequentLetterAmountTD.textContent = preparedObjectData.occurances
     }
-    mostFrequentLetterTD.textContent = preparedObjectData.concatString
-    mostFrequentLetterAmountTD.textContent = preparedObjectData.occurances
   }
 
   updateMostFrequentLetterCaseSensInTable(mostFrequentLetterCaseSensObject) {
-    let preparedObjectData
-
     if (mostFrequentLetterCaseSensObject.length > 0) {
-      preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterCaseSensObject)
+      const preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterCaseSensObject)
+      mostFrequentLetterCS_TD.textContent = preparedObjectData.concatString
+      mostFrequentLetterAmountCS_TD.textContent = preparedObjectData.occurances
     }
-    mostFrequentLetterCS_TD.textContent = preparedObjectData.concatString
-    mostFrequentLetterAmountCS_TD.textContent = preparedObjectData.occurances
   }
 
   updatePhraseCountResult(numberOfOccurances, phrase) {
@@ -52,7 +49,36 @@ export class ViewHandler {
   }
 
   updateSortedWords(sortedWordsArray) {
-    sortedWordsDiv.textContent = sortedWordsArray.toString()
+    sortedWordsDiv.innerHTML = ''
+    const allCreatedPTags = []
+    sortedWordsArray.forEach((element) => {
+      const p = document.createElement('p')
+      p.textContent = element
+      allCreatedPTags.push(p)
+    })
+    this.organizePTags(allCreatedPTags)
+  }
+
+  organizePTags(allCreatedPTags) {
+    let maximumPTagsInDiv = 15
+    const div = document.createElement('div')
+
+    allCreatedPTags.forEach((pTag) => {
+      div.append(pTag)
+      if (div.childElementCount === maximumPTagsInDiv) {
+        sortedWordsDiv.append(div.cloneNode(true))
+        div.innerHTML = ''
+      }
+    })
+    sortedWordsDiv.append(div)
+  }
+
+  updateWordCount(numberOfWords) {
+    numberOfWordsDiv.textContent = numberOfWords
+  }
+
+  updateTotalLetterCount(numberOfLetters) {
+    numberOfLettersDiv.textContent = numberOfLetters
   }
 
   #prepareFrequentLetterData(object) {

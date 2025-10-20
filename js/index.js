@@ -20,9 +20,13 @@ export const mostFrequentLetterAmountCS_TD = document.querySelector('#mostFreque
 
 export const sortedWordsDiv = document.querySelector('#sortedWordsDiv')
 
+export const numberOfWordsDiv = document.querySelector('#numberOfWordsDiv')
+export const numberOfLettersDiv = document.querySelector('#numberOfLettersDiv')
+
 const editArea = document.querySelector('#editArea')
 
 const radioButtonsDiv = document.querySelector('#radioButtonsDiv')
+const updateSortedWordsButton = document.querySelector('#updateSortedWordsButton')
 
 const phraseCountForm = document.querySelector('#phraseCountForm')
 const phraseInput = document.querySelector('#phraseInput')
@@ -58,6 +62,10 @@ radioButtonsDiv.addEventListener('click', (event) => {
   }
 })
 
+updateSortedWordsButton.addEventListener('click', () => {
+  getSortedWords()
+})
+
 /* --------------- FUNCTIONS --------------- */
 
 function mainFunction() {
@@ -73,14 +81,20 @@ function mainFunction() {
   const mostFrequentLetterCaseSensObject = stringAnalyzer.findMostFrequentLetterCaseSens(cleanedTextToAnalyze)
   viewHandler.updateMostFrequentLetterCaseSensInTable(mostFrequentLetterCaseSensObject)
 
-  getSortedWords()
+  const numberOfWords = stringAnalyzer.countWords(cleanedTextToAnalyze)
+  viewHandler.updateWordCount(numberOfWords)
+
+  const numberOfTotalLetters = stringAnalyzer.countTotalLetters(cleanedTextToAnalyze)
+  viewHandler.updateTotalLetterCount(numberOfTotalLetters)
 }
 
 function setSortOrder(value) {
-  if (value === 'ascending') {
+  if (value === 'ascending' && ascendingOrder === false) {
     ascendingOrder = true
-  } else {
+    getSortedWords()
+  } else if (value === 'descending' && ascendingOrder === true) {
     ascendingOrder = false
+    getSortedWords()
   }
 }
 
@@ -109,6 +123,9 @@ function resetStatistics() {
   const allDataHolders = document.querySelectorAll('td.dataholder')
   allDataHolders.forEach((dataholder) => dataholder.textContent = '')
   phraseCountResultDiv.textContent = ''
+  sortedWordsDiv.innerHTML = ''
+  numberOfWordsDiv.textContent = ''
+  numberOfLettersDiv.textContent = ''
 }
 
 /*

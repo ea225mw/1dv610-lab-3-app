@@ -14,11 +14,20 @@
     <h1>String Works Editor</h1>
     <div contenteditable="true" id="editArea"></div>
     <div class="sections">
+      <h2>Words and letters</h2>
+      <div class="flexDirectionRow">
+        <div><b>Word count:</b></div>
+        <div id="numberOfWordsDiv"></div>
+      </div>
+      <div class="flexDirectionRow">
+        <div><b>Letter count, total:</b></div>
+        <div id="numberOfLettersDiv"></div>
+      </div>
       <table>
-        <caption>Words and letters</caption>
+        <caption>Word lenghts</caption>
         <tr>
-          <th></th>
-          <th>Words</th>
+          <th class="tableColumn1"></th>
+          <th class="tableColumn2">Words</th>
           <th>Letters</th>
         </tr>
         <tr>
@@ -30,6 +39,15 @@
           <td>Longest words</td>
           <td id="longestWordsTD" class="dataholder"></td>
           <td id="longestLettersTD" class="dataholder"></td>
+        </tr>
+      </table>
+
+      <table>
+        <caption>Letter occurances</caption>
+        <tr>
+          <th class="tableColumn1"></th>
+          <th class="tableColumn2">Letter</th>
+          <th>Occurances</th>
         </tr>
         <tr>
           <td>Most frequent letter</td>
@@ -53,15 +71,17 @@
       <div id="phraseCountResultDiv"></div>
     </div>
     <div class="sections">
-      <h2>Sorted words</h2>
+      <h2>Sorted words (alphabetically)</h2>
       <div id="radioButtonsDiv">
+        <button type="button" id="updateSortedWordsButton">Update sorted words</button>
         <label for="ascending" value="ascending">Ascending</label>
         <input type="radio" name="sortOrder" id="ascending" value="ascending" checked>
         <label for="descending" value="descending">Descending</label>
         <input type="radio" name="sortOrder" id="descending" value="descending">
+        <label for="skipDuplicates">Skip duplicates</label>
+        <input type="checkbox" name="skipDuplicates" id="">
       </div>
       <div id="sortedWordsDiv">
-
       </div>
     </div>
   </main>
