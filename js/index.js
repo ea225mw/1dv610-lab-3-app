@@ -28,6 +28,8 @@ const editArea = document.querySelector('#editArea')
 const radioButtonsDiv = document.querySelector('#radioButtonsDiv')
 const updateSortedWordsButton = document.querySelector('#updateSortedWordsButton')
 
+export const skipDuplicatesCheckbox = document.querySelector('#skipDuplicates')
+
 const phraseCountForm = document.querySelector('#phraseCountForm')
 const phraseInput = document.querySelector('#phraseInput')
 export const phraseCountResultDiv = document.querySelector('#phraseCountResultDiv')
@@ -120,38 +122,15 @@ function removeHtmlAndKeepPureText() {
 }
 
 function resetStatistics() {
-  const allDataHolders = document.querySelectorAll('td.dataholder')
-  allDataHolders.forEach((dataholder) => dataholder.textContent = '')
+  resetDataholders()
   phraseCountResultDiv.textContent = ''
   sortedWordsDiv.innerHTML = ''
   numberOfWordsDiv.textContent = ''
   numberOfLettersDiv.textContent = ''
 }
 
-/*
-function colorizeLongestWord() {
-  const treeWalker = document.createTreeWalker(editArea, NodeFilter.SHOW_TEXT)
-  const longestWordRegExp = new RegExp(`\\b(${longestWordObject.words[0]}) \\b`, "gi")
-  console.log(longestWordRegExp);
-
-  const textNodes = []
-  while (treeWalker.nextNode()) {
-    textNodes.push(treeWalker.currentNode)
-  }
-
-  for (const node of textNodes) {
-    if (longestWordRegExp.test(node.textContent)) {
-      const span = document.createElement('span')
-      span.innerHTML = node.textContent.replace(longestWordRegExp, `<span class="longestWord">$1</span>`)
-      node.replaceWith(...span.childNodes)
-    }
-  }
+function resetDataholders() {
+  const allDataHolders = document.querySelectorAll('td.dataholder')
+  allDataHolders.forEach((dataholder) => dataholder.textContent = '')
 }
-*/
 
-/**
- * Formattering av text
- * Markdown
- * En visualisering av utvalda ord
- * News article checker + LLM, få ut mer ur texten, vad den signalerar
- */

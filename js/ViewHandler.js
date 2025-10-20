@@ -6,7 +6,8 @@ import {
   mostFrequentLetterCS_TD, mostFrequentLetterAmountCS_TD,
   phraseCountResultDiv,
   sortedWordsDiv,
-  numberOfWordsDiv, numberOfLettersDiv
+  numberOfWordsDiv, numberOfLettersDiv,
+  skipDuplicatesCheckbox
 }
   from "./index.js"
 
