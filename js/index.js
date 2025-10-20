@@ -1,70 +1,43 @@
 import { StringAnalyzer } from './StringAnalyzer.js'
 import { ViewHandler } from './ViewHandler.js'
+import * as DOM_Ref from './DOM_References.js'
 
 const stringAnalyzer = new StringAnalyzer
 const viewHandler = new ViewHandler
 let ascendingOrder = true
-
-// ---------- DOM References ----------
-export const longestWordsTD = document.querySelector('#longestWordsTD')
-export const longestLettersTD = document.querySelector('#longestLettersTD')
-
-export const shortestWordsTD = document.querySelector('#shortestWordsTD')
-export const shortestLettersTD = document.querySelector('#shortestLettersTD')
-
-export const mostFrequentLetterTD = document.querySelector('#mostFrequentLetterTD')
-export const mostFrequentLetterAmountTD = document.querySelector('#mostFrequentLetterAmountTD')
-
-export const mostFrequentLetterCS_TD = document.querySelector('#mostFrequentLetterCS_TD')
-export const mostFrequentLetterAmountCS_TD = document.querySelector('#mostFrequentLetterAmountCS_TD')
-
-export const sortedWordsDiv = document.querySelector('#sortedWordsDiv')
-
-export const numberOfWordsDiv = document.querySelector('#numberOfWordsDiv')
-export const numberOfLettersDiv = document.querySelector('#numberOfLettersDiv')
-
-const editArea = document.querySelector('#editArea')
-
-const radioButtonsDiv = document.querySelector('#radioButtonsDiv')
-const updateSortedWordsButton = document.querySelector('#updateSortedWordsButton')
-
-export const skipDuplicatesCheckbox = document.querySelector('#skipDuplicates')
-
-const phraseCountForm = document.querySelector('#phraseCountForm')
-const phraseInput = document.querySelector('#phraseInput')
-export const phraseCountResultDiv = document.querySelector('#phraseCountResultDiv')
-
 let cleanedTextToAnalyze = ''
 
 /* --------------- EVENT LISTENERS ----------------- */
-editArea.addEventListener('input', () => {
+DOM_Ref.editArea.addEventListener('input', () => {
   cleanedTextToAnalyze = removeHtmlAndKeepPureText()
 
-  if (cleanedTextToAnalyze === '' || editArea.textContent === '') {
+  if (cleanedTextToAnalyze === '' || DOM_Ref.editArea.textContent === '') {
     resetStatistics()
-    editArea.innerHTML = ''
+    DOM_Ref.editArea.innerHTML = ''
   }
   mainFunction()
 })
 
-phraseCountForm.addEventListener('submit', (event) => {
+DOM_Ref.phraseCountForm.addEventListener('submit', (event) => {
   event.preventDefault()
 
   if (cleanedTextToAnalyze !== '' || editArea.textContent !== '') {
-    const phrase = phraseInput.value
+    const phrase = DOM_Ref.phraseInput.value
     const numberOfOccurances = stringAnalyzer.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
     viewHandler.updatePhraseCountResult(numberOfOccurances, phrase)
   }
 })
 
-radioButtonsDiv.addEventListener('click', (event) => {
+DOM_Ref.sortChoicesDiv.addEventListener('click', (event) => {
   const target = event.target.closest('input')
-  if (target !== null) {
+  if (target !== null && target.value !== 'skipDuplicates') {
     setSortOrder(target.value)
+  } else if (target !== null && target.value === 'skipDuplicates') {
+    getSortedWords()
   }
 })
 
-updateSortedWordsButton.addEventListener('click', () => {
+DOM_Ref.updateSortedWordsButton.addEventListener('click', () => {
   getSortedWords()
 })
 
@@ -111,7 +84,7 @@ function getSortedWords() {
 }
 
 function removeHtmlAndKeepPureText() {
-  const textWithHtmlTags = editArea.innerHTML
+  const textWithHtmlTags = DOM_Ref.editArea.innerHTML
   return textWithHtmlTags
     .replace(/<div><br><\/div>/g, '\n')
     .replace(/<div>/g, '\n')
@@ -123,14 +96,13 @@ function removeHtmlAndKeepPureText() {
 
 function resetStatistics() {
   resetDataholders()
-  phraseCountResultDiv.textContent = ''
-  sortedWordsDiv.innerHTML = ''
-  numberOfWordsDiv.textContent = ''
-  numberOfLettersDiv.textContent = ''
+  DOM_Ref.phraseCountResultDiv.textContent = ''
+  DOM_Ref.sortedWordsDiv.innerHTML = ''
+  DOM_Ref.numberOfWordsDiv.textContent = ''
+  DOM_Ref.numberOfLettersDiv.textContent = ''
 }
 
 function resetDataholders() {
   const allDataHolders = document.querySelectorAll('td.dataholder')
   allDataHolders.forEach((dataholder) => dataholder.textContent = '')
 }
-

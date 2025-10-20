@@ -1,5 +1,5 @@
 import { stringWorks } from 'https://cdn.jsdelivr.net/npm/string-works@0.1.3/+esm'
-import { skipDuplicatesCheckbox } from './index.js'
+import * as DOM_Ref from './DOM_References.js'
 
 const sw = stringWorks
 
@@ -26,7 +26,7 @@ export class StringAnalyzer {
   }
 
   sortWordsAscending(cleanedTextToAnalyze) {
-    if (skipDuplicatesCheckbox.checked) {
+    if (DOM_Ref.skipDuplicatesCheckbox.checked) {
       const uniqueWords = new Set
       const sortedWords = sw.sortWordsAscending(cleanedTextToAnalyze)
       for (const word of sortedWords) {
@@ -38,7 +38,7 @@ export class StringAnalyzer {
   }
 
   sortWordsDescending(cleanedTextToAnalyze) {
-    if (skipDuplicatesCheckbox.checked) {
+    if (DOM_Ref.skipDuplicatesCheckbox.checked) {
       const uniqueWords = new Set
       const sortedWords = sw.sortWordsDescending(cleanedTextToAnalyze)
       for (const word of sortedWords) {

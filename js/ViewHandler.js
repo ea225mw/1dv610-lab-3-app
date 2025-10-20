@@ -1,56 +1,46 @@
 // Import HTML element referencess from index.js
-import {
-  shortestWordsTD, shortestLettersTD,
-  longestWordsTD, longestLettersTD,
-  mostFrequentLetterTD, mostFrequentLetterAmountTD,
-  mostFrequentLetterCS_TD, mostFrequentLetterAmountCS_TD,
-  phraseCountResultDiv,
-  sortedWordsDiv,
-  numberOfWordsDiv, numberOfLettersDiv,
-  skipDuplicatesCheckbox
-}
-  from "./index.js"
+import * as DOM_Ref from './DOM_References.js'
 
 export class ViewHandler {
 
   updateShortestWordInTable(shortestWordObject) {
-    shortestWordsTD.textContent = this.#prepareTableText(shortestWordObject.words)
+    DOM_Ref.shortestWordsTD.textContent = this.#prepareTableText(shortestWordObject.words)
 
     if (shortestWordObject.numberOfLetters > 0) {
-      shortestLettersTD.textContent = shortestWordObject.numberOfLetters
+      DOM_Ref.shortestLettersTD.textContent = shortestWordObject.numberOfLetters
     }
   }
 
   updateLongestWordInTable(longestWordObject) {
-    longestWordsTD.textContent = this.#prepareTableText(longestWordObject.words)
+    DOM_Ref.longestWordsTD.textContent = this.#prepareTableText(longestWordObject.words)
 
     if (longestWordObject.numberOfLetters > 0) {
-      longestLettersTD.textContent = longestWordObject.numberOfLetters
+      DOM_Ref.longestLettersTD.textContent = longestWordObject.numberOfLetters
     }
   }
 
   updateMostFrequentLetterInTable(mostFrequentLetterObject) {
     if (mostFrequentLetterObject.length > 0) {
       const preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterObject)
-      mostFrequentLetterTD.textContent = preparedObjectData.concatString
-      mostFrequentLetterAmountTD.textContent = preparedObjectData.occurances
+      DOM_Ref.mostFrequentLetterTD.textContent = preparedObjectData.concatString
+      DOM_Ref.mostFrequentLetterAmountTD.textContent = preparedObjectData.occurances
     }
   }
 
   updateMostFrequentLetterCaseSensInTable(mostFrequentLetterCaseSensObject) {
     if (mostFrequentLetterCaseSensObject.length > 0) {
       const preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterCaseSensObject)
-      mostFrequentLetterCS_TD.textContent = preparedObjectData.concatString
-      mostFrequentLetterAmountCS_TD.textContent = preparedObjectData.occurances
+      DOM_Ref.mostFrequentLetterCS_TD.textContent = preparedObjectData.concatString
+      DOM_Ref.mostFrequentLetterAmountCS_TD.textContent = preparedObjectData.occurances
     }
   }
 
   updatePhraseCountResult(numberOfOccurances, phrase) {
-    phraseCountResultDiv.textContent = `The phrase \"${phrase}\" occurs ${numberOfOccurances} times.`
+    DOM_Ref.phraseCountResultDiv.textContent = `The phrase \"${phrase}\" occurs ${numberOfOccurances} times.`
   }
 
   updateSortedWords(sortedWordsArray) {
-    sortedWordsDiv.innerHTML = ''
+    DOM_Ref.sortedWordsDiv.innerHTML = ''
     const allCreatedPTags = []
     sortedWordsArray.forEach((element) => {
       const p = document.createElement('p')
@@ -71,15 +61,15 @@ export class ViewHandler {
         div.innerHTML = ''
       }
     })
-    sortedWordsDiv.append(div)
+    DOM_Ref.sortedWordsDiv.append(div)
   }
 
   updateWordCount(numberOfWords) {
-    numberOfWordsDiv.textContent = numberOfWords
+    DOM_Ref.numberOfWordsDiv.textContent = numberOfWords
   }
 
   updateTotalLetterCount(numberOfLetters) {
-    numberOfLettersDiv.textContent = numberOfLetters
+    DOM_Ref.numberOfLettersDiv.textContent = numberOfLetters
   }
 
   #prepareFrequentLetterData(object) {
