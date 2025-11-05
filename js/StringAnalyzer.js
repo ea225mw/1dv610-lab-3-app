@@ -1,5 +1,4 @@
-// import { stringWorks } from 'https://cdn.jsdelivr.net/npm/string-works@0.1.5/+esm'
-import { stringWorks } from './src/LocalTestIndex.js'
+import { stringWorks } from 'https://cdn.jsdelivr.net/npm/string-works@0.1.6/+esm'
 import { isSkipDuplicatesChecked } from './index.js'
 
 const sw = stringWorks
