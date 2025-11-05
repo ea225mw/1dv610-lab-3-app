@@ -10,20 +10,26 @@
 </head>
 
 <body>
-  <main>
+
+  <div id="gridWrapper">
+    <aside>
+      <p>String Works Editor is a text tool that extracts statistics and data from a provided text. Type or paste a text
+        in the text field and the tool updates the extracted data in real time.</p>
+      <p>If you paste text we recommend that you paste it without formatting, that is, as pure text.</p>
+    </aside>
     <div id="appNameHeader">
       <h1>String Works Editor</h1>
     </div>
     <div contenteditable="true" id="editArea"></div>
-    <div class="sections">
+    <div id="wordsAndLettersDiv" class="sections">
       <h2>Words and letters</h2>
       <div class="flexDirectionRow">
         <div><b>Word count:</b></div>
-        <div id="numberOfWordsDiv"></div>
+        <div id="numberOfWordsDiv">0</div>
       </div>
       <div class="flexDirectionRow">
         <div><b>Letter count, total:</b></div>
-        <div id="numberOfLettersDiv"></div>
+        <div id="numberOfLettersDiv">0</div>
       </div>
       <table>
         <caption>Word lenghts</caption>
@@ -43,7 +49,6 @@
           <td id="longestLettersTD" class="dataholder"></td>
         </tr>
       </table>
-
       <table>
         <caption>Letter occurances</caption>
         <tr>
@@ -77,11 +82,11 @@
       <div class="flexRow">
         <div id="sortChoicesDiv">
           <div class="sortOrderChoice">
-            <label for="ascending" value="ascending">Ascending</label>
+            <label for="ascending">Ascending</label>
             <input type="radio" name="sortOrder" id="ascending" value="ascending" checked>
           </div>
           <div class="sortOrderChoice">
-            <label for="descending" value="descending">Descending</label>
+            <label for="descending">Descending</label>
             <input type="radio" name="sortOrder" id="descending" value="descending">
           </div>
         </div>
@@ -94,7 +99,8 @@
         <!-- CONTENT CREATED DYNAMICALLY -->
       </div>
     </div>
-  </main>
+  </div>
+
 </body>
 
 </html>
