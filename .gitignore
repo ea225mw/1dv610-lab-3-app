@@ -200,5 +200,7 @@ $RECYCLE.BIN/
 
 # Misc
 lorem.html
+prettier.config.js
+js/src/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,linux,macos,windows,visualstudiocode

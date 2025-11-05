@@ -1,22 +1,25 @@
 body {
   font-size: 18px;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  background-color: #ED775A;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background-color: #ed775a;
 }
 
 main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template:
+    'a a' auto
+    'b c'
+    'd c';
   max-width: 60vw;
   margin: 0 auto;
 }
 
 #editArea {
+  grid-area: b;
   box-sizing: border-box;
   padding: 1rem;
   background-color: white;
-  border: 5px solid #E4004B;
+  border: 5px solid #e4004b;
   width: 45rem;
   height: 22rem;
   overflow: auto;
@@ -33,7 +36,9 @@ main {
   background-color: aqua;
 }
 
-table, td, th {
+table,
+td,
+th {
   border-collapse: collapse;
   border: 1px solid black;
   padding: 2px 10px;
@@ -44,6 +49,10 @@ caption {
   font-weight: 600;
   margin-top: 1rem;
   margin-bottom: 0.3rem;
+}
+
+#appNameHeader {
+  grid-area: a;
 }
 
 h2 {
@@ -58,19 +67,21 @@ p {
 
 .sections {
   box-sizing: border-box;
-  background-color: #FAD691;
+  background-color: #fad691;
   padding: 1rem;
-  border: solid #E4004B 0.5rem;
+  border: solid #e4004b 0.5rem;
   border-radius: 1rem;
   margin-bottom: 2rem;
   width: 45rem;
 }
 
-input[type="radio"] {
-margin-right: 1.5rem;
+input[type='radio'] {
+  margin-right: 1.7rem;
+  margin-left: 2px;
 }
 
 #sortChoicesDiv {
+  display: flex;
   margin-bottom: 1.5rem;
 }
 
@@ -85,6 +96,15 @@ margin-right: 1.5rem;
   overflow-x: auto;
 }
 
+#sortWordsSectionDiv {
+  grid-area: c;
+  max-height: 600px;
+}
+
+#phraseCountDiv {
+  max-height: 200px;
+}
+
 .flexDirectionRow {
   display: flex;
   flex-direction: row;
@@ -97,4 +117,8 @@ margin-right: 1.5rem;
 
 .tableColumn2 {
   min-width: 8rem;
+}
+
+.flexRow {
+  display: flex;
 }

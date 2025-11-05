@@ -1,21 +1,26 @@
 import { StringAnalyzer } from './StringAnalyzer.js'
 import { ViewHandler } from './ViewHandler.js'
+import { Resetter } from './Resetter.js'
 import * as DOM_Ref from './DOM_References.js'
 
-const stringAnalyzer = new StringAnalyzer
-const viewHandler = new ViewHandler
+const stringAnalyzer = new StringAnalyzer()
+const viewHandler = new ViewHandler()
+const resetter = new Resetter()
+
 let ascendingOrder = true
 let cleanedTextToAnalyze = ''
+export const allDataHolders = document.querySelectorAll('td.dataholder')
 
 /* --------------- EVENT LISTENERS ----------------- */
 DOM_Ref.editArea.addEventListener('input', () => {
-  cleanedTextToAnalyze = removeHtmlAndKeepPureText()
-
-  if (cleanedTextToAnalyze === '' || DOM_Ref.editArea.textContent === '') {
-    resetStatistics()
-    DOM_Ref.editArea.innerHTML = ''
+  try {
+    updateCleanedTextToAnalyze()
+    updateHTMLElementsInRealtime()
+    getAndDisplaySortedWords()
+  } catch (error) {
+    console.log(error)
+    return error
   }
-  mainFunction()
 })
 
 DOM_Ref.phraseCountForm.addEventListener('submit', (event) => {
@@ -23,17 +28,33 @@ DOM_Ref.phraseCountForm.addEventListener('submit', (event) => {
   submitPhraseCountForm()
 })
 
-DOM_Ref.sortChoicesDiv.addEventListener('click', (event) => {
-  handleSortChoices(event)
+DOM_Ref.sortOrderChoicesDiv.addEventListener('click', (event) => {
+  const sortOrder = extractSortOrderValue(event)
+  setSortOrder(sortOrder)
+  getAndDisplaySortedWords()
 })
 
-DOM_Ref.updateSortedWordsButton.addEventListener('click', () => {
-  getSortedWords()
+DOM_Ref.skipDuplicatesDiv.addEventListener('click', () => {
+  getAndDisplaySortedWords()
 })
 
 /* --------------- FUNCTIONS --------------- */
 
-function mainFunction() {
+export function setCleanedTextToAnalyzeToEmptyString() {
+  cleanedTextToAnalyze = ''
+}
+
+function updateCleanedTextToAnalyze() {
+  const onlyEmptyElements = hasEditAreaOnlyEmptyElements()
+  if (onlyEmptyElements) {
+    resetter.emptyEditAreaAndCleanedString()
+    resetter.resetStatistics()
+  } else {
+    cleanedTextToAnalyze = removeHtmlAndKeepPureText().trim()
+  }
+}
+
+function updateHTMLElementsInRealtime() {
   const shortestWordObject = stringAnalyzer.findShortestWord(cleanedTextToAnalyze)
   viewHandler.updateShortestWordInTable(shortestWordObject)
 
@@ -46,11 +67,17 @@ function mainFunction() {
   const mostFrequentLetterCaseSensObject = stringAnalyzer.findMostFrequentLetterCaseSens(cleanedTextToAnalyze)
   viewHandler.updateMostFrequentLetterCaseSensInTable(mostFrequentLetterCaseSensObject)
 
-  const numberOfWords = stringAnalyzer.countWords(cleanedTextToAnalyze)
+  const numberOfWords = stringAnalyzer.countWords(cleanedTextToAnalyze.trim())
   viewHandler.updateWordCount(numberOfWords)
 
   const numberOfTotalLetters = stringAnalyzer.countTotalLetters(cleanedTextToAnalyze)
   viewHandler.updateTotalLetterCount(numberOfTotalLetters)
+}
+
+function hasEditAreaOnlyEmptyElements() {
+  const possibleHtmlLeftovers = ['<br>', '<br/>', '<div><br></div>', '<p><br></p>']
+  const contentInEditArea = DOM_Ref.editArea.innerHTML.trim()
+  return possibleHtmlLeftovers.some((element) => element === contentInEditArea)
 }
 
 function submitPhraseCountForm() {
@@ -61,26 +88,27 @@ function submitPhraseCountForm() {
   }
 }
 
-function handleSortChoices(event) {
-  const target = event.target.closest('input')
-  if (target !== null && target.value !== 'skipDuplicates') {
-    setSortOrder(target.value)
-  } else if (target !== null && target.value === 'skipDuplicates') {
-    getSortedWords()
+function extractSortOrderValue(event) {
+  const targetDiv = event.target.closest('div')
+  if (targetDiv !== null) {
+    return targetDiv.querySelector('input').value
   }
 }
 
 function setSortOrder(value) {
   if (value === 'ascending' && ascendingOrder === false) {
     ascendingOrder = true
-    getSortedWords()
   } else if (value === 'descending' && ascendingOrder === true) {
     ascendingOrder = false
-    getSortedWords()
   }
 }
 
-function getSortedWords() {
+export function isSkipDuplicatesChecked() {
+  if (DOM_Ref.skipDuplicatesCheckbox.checked) return true
+  else return false
+}
+
+function getAndDisplaySortedWords() {
   let sortedWords
   if (ascendingOrder) {
     sortedWords = stringAnalyzer.sortWordsAscending(cleanedTextToAnalyze)
@@ -99,17 +127,4 @@ function removeHtmlAndKeepPureText() {
     .replace(/<\/div>/g, '')
     .replace(/<[^>]+>/g, '')
     .replace(/&nbsp/g, '')
-}
-
-function resetStatistics() {
-  resetDataholders()
-  DOM_Ref.phraseCountResultDiv.textContent = ''
-  DOM_Ref.sortedWordsDiv.innerHTML = ''
-  DOM_Ref.numberOfWordsDiv.textContent = ''
-  DOM_Ref.numberOfLettersDiv.textContent = ''
-}
-
-function resetDataholders() {
-  const allDataHolders = document.querySelectorAll('td.dataholder')
-  allDataHolders.forEach((dataholder) => dataholder.textContent = '')
 }

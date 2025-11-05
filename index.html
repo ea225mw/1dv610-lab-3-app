@@ -11,7 +11,9 @@
 
 <body>
   <main>
-    <h1>String Works Editor</h1>
+    <div id="appNameHeader">
+      <h1>String Works Editor</h1>
+    </div>
     <div contenteditable="true" id="editArea"></div>
     <div class="sections">
       <h2>Words and letters</h2>
@@ -70,18 +72,26 @@
       </form>
       <div id="phraseCountResultDiv"></div>
     </div>
-    <div class="sections">
+    <div id="sortWordsSectionDiv" class="sections">
       <h2>Sorted words (alphabetically)</h2>
-      <div id="sortChoicesDiv">
-        <button type="button" id="updateSortedWordsButton">Update sorted words</button>
-        <label for="ascending" value="ascending">Ascending</label>
-        <input type="radio" name="sortOrder" id="ascending" value="ascending" checked>
-        <label for="descending" value="descending">Descending</label>
-        <input type="radio" name="sortOrder" id="descending" value="descending">
-        <label for="skipDuplicates">Skip duplicates</label>
-        <input type="checkbox" name="skipDuplicates" id="skipDuplicates" value="skipDuplicates" checked>
+      <div class="flexRow">
+        <div id="sortChoicesDiv">
+          <div class="sortOrderChoice">
+            <label for="ascending" value="ascending">Ascending</label>
+            <input type="radio" name="sortOrder" id="ascending" value="ascending" checked>
+          </div>
+          <div class="sortOrderChoice">
+            <label for="descending" value="descending">Descending</label>
+            <input type="radio" name="sortOrder" id="descending" value="descending">
+          </div>
+        </div>
+        <div id="skipDuplicatesDiv">
+          <label for="skipDuplicates">Skip duplicates</label>
+          <input type="checkbox" name="skipDuplicates" id="skipDuplicates" value="skipDuplicates" checked>
+        </div>
       </div>
       <div id="sortedWordsDiv">
+        <!-- CONTENT CREATED DYNAMICALLY -->
       </div>
     </div>
   </main>

@@ -17,10 +17,11 @@ export const numberOfLettersDiv = document.querySelector('#numberOfLettersDiv')
 
 export const editArea = document.querySelector('#editArea')
 
-export const sortChoicesDiv = document.querySelector('#sortChoicesDiv')
+export const sortOrderChoicesDiv = document.querySelector('#sortChoicesDiv')
 export const updateSortedWordsButton = document.querySelector('#updateSortedWordsButton')
 
 export const skipDuplicatesCheckbox = document.querySelector('#skipDuplicates')
+export const skipDuplicatesDiv = document.querySelector('#skipDuplicatesDiv')
 
 export const phraseCountForm = document.querySelector('#phraseCountForm')
 export const phraseInput = document.querySelector('#phraseInput')

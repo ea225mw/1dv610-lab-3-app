@@ -1,4 +1,4 @@
-// Import HTML element referencess from index.js
+// Import HTML element references.
 import * as DOM_Ref from './DOM_References.js'
 
 export class ViewHandler {
