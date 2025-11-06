@@ -2,7 +2,6 @@
 import * as DOM_Ref from './DOM_References.js'
 
 export class ViewHandler {
-
   updateShortestWordInTable(shortestWordObject) {
     DOM_Ref.shortestWordsTD.textContent = this.#prepareTableText(shortestWordObject.words)
 

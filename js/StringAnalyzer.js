@@ -1,61 +1,73 @@
-import { stringWorks } from 'https://cdn.jsdelivr.net/npm/string-works@0.1.6/+esm'
 import { isSkipDuplicatesChecked } from './index.js'
 
-const sw = stringWorks
-
 export class StringAnalyzer {
+  #sw
+
+  constructor() {
+    this.#loadStringWorksModule()
+  }
+
+  async #loadStringWorksModule() {
+    try {
+      const module = await import('https://cdn.jsdelivr.net/npm/string-works@0.1.6/+esm')
+      this.#sw = module.stringWorks
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   findShortestWord(cleanedTextToAnalyze) {
-    return sw.findShortestWord(cleanedTextToAnalyze)
+    return this.#sw.findShortestWord(cleanedTextToAnalyze)
   }
 
   findLongestWord(cleanedTextToAnalyze) {
-    return sw.findLongestWord(cleanedTextToAnalyze)
+    return this.#sw.findLongestWord(cleanedTextToAnalyze)
   }
 
   findMostFrequentLetter(cleanedTextToAnalyze) {
-    return sw.mostFrequentLetter(cleanedTextToAnalyze)
+    return this.#sw.mostFrequentLetter(cleanedTextToAnalyze)
   }
 
   findMostFrequentLetterCaseSens(cleanedTextToAnalyze) {
-    return sw.mostFrequentLetterCS(cleanedTextToAnalyze)
+    return this.#sw.mostFrequentLetterCS(cleanedTextToAnalyze)
   }
 
   countSpecifiedPhrase(cleanedTextToAnalyze, phrase) {
     phrase = phraseInput.value
-    return sw.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
+    return this.#sw.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
   }
 
   sortWordsAscending(cleanedTextToAnalyze) {
     const skipDuplicates = isSkipDuplicatesChecked()
     if (skipDuplicates) {
       const uniqueWords = new Set()
-      const sortedWords = sw.sortWordsAscending(cleanedTextToAnalyze)
+      const sortedWords = this.#sw.sortWordsAscending(cleanedTextToAnalyze)
       for (const word of sortedWords) {
         uniqueWords.add(word)
       }
       return Array.from(uniqueWords)
     }
-    return sw.sortWordsAscending(cleanedTextToAnalyze)
+    return this.#sw.sortWordsAscending(cleanedTextToAnalyze)
   }
 
   sortWordsDescending(cleanedTextToAnalyze) {
     const skipDuplicates = isSkipDuplicatesChecked()
     if (skipDuplicates) {
       const uniqueWords = new Set()
-      const sortedWords = sw.sortWordsDescending(cleanedTextToAnalyze)
+      const sortedWords = this.#sw.sortWordsDescending(cleanedTextToAnalyze)
       for (const word of sortedWords) {
         uniqueWords.add(word)
       }
       return Array.from(uniqueWords)
     }
-    return sw.sortWordsDescending(cleanedTextToAnalyze)
+    return this.#sw.sortWordsDescending(cleanedTextToAnalyze)
   }
 
   countWords(cleanedTextToAnalyze) {
-    return sw.countWords(cleanedTextToAnalyze)
+    return this.#sw.countWords(cleanedTextToAnalyze)
   }
 
   countTotalLetters(cleanedTextToAnalyze) {
-    return sw.countLetters(cleanedTextToAnalyze)
+    return this.#sw.countLetters(cleanedTextToAnalyze)
   }
 }
