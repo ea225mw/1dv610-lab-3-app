@@ -1,13 +1,15 @@
 import { StringAnalyzer } from './StringAnalyzer.js'
 import { ViewHandler } from './ViewHandler.js'
 import { Resetter } from './Resetter.js'
+import { SortingOptionsHandler } from './SortingOptionsHandler.js'
 import * as DOM_Ref from './DOM_References.js'
 
 const stringAnalyzer = new StringAnalyzer()
 const viewHandler = new ViewHandler()
 const resetter = new Resetter()
+const sortingOptionsHandler = new SortingOptionsHandler()
 
-let ascendingOrder = true
+export let ascendingOrder = true
 let cleanedTextToAnalyze = ''
 export const allDataHolders = document.querySelectorAll('td.dataholder')
 
@@ -29,8 +31,8 @@ DOM_Ref.phraseCountForm.addEventListener('submit', (event) => {
 })
 
 DOM_Ref.sortOrderChoicesDiv.addEventListener('click', (event) => {
-  const sortOrder = extractSortOrderValue(event)
-  setSortOrder(sortOrder)
+  const sortOrder = sortingOptionsHandler.extractSortOrderValue(event)
+  sortingOptionsHandler.setSortOrder(sortOrder)
   getAndDisplaySortedWords()
 })
 
@@ -38,12 +40,20 @@ DOM_Ref.skipDuplicatesDiv.addEventListener('click', () => {
   getAndDisplaySortedWords()
 })
 
-/* --------------- FUNCTIONS --------------- */
-
+/* --------------- EXPORTED FUNCTIONS --------------- */
 export function setCleanedTextToAnalyzeToEmptyString() {
   cleanedTextToAnalyze = ''
 }
 
+export function setAscendingOrder(boolean) {
+  ascendingOrder = boolean
+}
+
+export function isSkipDuplicatesChecked() {
+  return sortingOptionsHandler.isSkipDuplicatesChecked()
+}
+
+/* --------------- FUNCTIONS --------------- */
 function updateCleanedTextToAnalyze() {
   const onlyEmptyElements = hasEditAreaOnlyEmptyElements()
   if (onlyEmptyElements) {
@@ -52,6 +62,17 @@ function updateCleanedTextToAnalyze() {
   } else {
     cleanedTextToAnalyze = removeHtmlAndKeepPureText().trim()
   }
+}
+
+function removeHtmlAndKeepPureText() {
+  const textWithHtmlTags = DOM_Ref.editArea.innerHTML
+  return textWithHtmlTags
+    .replace(/<div><br><\/div>/g, '\n')
+    .replace(/<div>/g, '\n')
+    .replace(/<br\s*\/?>/g, '\n')
+    .replace(/<\/div>/g, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp/g, '')
 }
 
 function updateHTMLElementsInRealtime() {
@@ -88,26 +109,6 @@ function submitPhraseCountForm() {
   }
 }
 
-function extractSortOrderValue(event) {
-  const targetDiv = event.target.closest('div')
-  if (targetDiv !== null) {
-    return targetDiv.querySelector('input').value
-  }
-}
-
-function setSortOrder(value) {
-  if (value === 'ascending' && ascendingOrder === false) {
-    ascendingOrder = true
-  } else if (value === 'descending' && ascendingOrder === true) {
-    ascendingOrder = false
-  }
-}
-
-export function isSkipDuplicatesChecked() {
-  if (DOM_Ref.skipDuplicatesCheckbox.checked) return true
-  else return false
-}
-
 function getAndDisplaySortedWords() {
   let sortedWords
   if (ascendingOrder) {
@@ -116,15 +117,4 @@ function getAndDisplaySortedWords() {
     sortedWords = stringAnalyzer.sortWordsDescending(cleanedTextToAnalyze)
   }
   viewHandler.updateSortedWords(sortedWords)
-}
-
-function removeHtmlAndKeepPureText() {
-  const textWithHtmlTags = DOM_Ref.editArea.innerHTML
-  return textWithHtmlTags
-    .replace(/<div><br><\/div>/g, '\n')
-    .replace(/<div>/g, '\n')
-    .replace(/<br\s*\/?>/g, '\n')
-    .replace(/<\/div>/g, '')
-    .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp/g, '')
 }
