@@ -2,12 +2,13 @@ import { StringAnalyzer } from './StringAnalyzer.js'
 import { ViewHandler } from './ViewHandler.js'
 import { Resetter } from './Resetter.js'
 import { SortingOptionsHandler } from './SortingOptionsHandler.js'
-import * as DOM_Ref from './DOM_References.js'
+import { DOMReferencer } from './DOMReferencer.js'
 
+const DOM_Ref = new DOMReferencer()
+const viewHandler = new ViewHandler(DOM_Ref)
+const resetter = new Resetter(DOM_Ref)
+const sortingOptionsHandler = new SortingOptionsHandler(DOM_Ref)
 const stringAnalyzer = new StringAnalyzer()
-const viewHandler = new ViewHandler()
-const resetter = new Resetter()
-const sortingOptionsHandler = new SortingOptionsHandler()
 
 export let ascendingOrder = true
 let cleanedTextToAnalyze = ''
@@ -21,23 +22,34 @@ DOM_Ref.editArea.addEventListener('input', () => {
     getAndDisplaySortedWords()
   } catch (error) {
     console.log(error)
-    return error
   }
 })
 
 DOM_Ref.phraseCountForm.addEventListener('submit', (event) => {
-  event.preventDefault()
-  submitPhraseCountForm()
+  try {
+    event.preventDefault()
+    submitPhraseCountForm()
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 DOM_Ref.sortOrderChoicesDiv.addEventListener('click', (event) => {
-  const sortOrder = sortingOptionsHandler.extractSortOrderValue(event)
-  sortingOptionsHandler.setSortOrder(sortOrder)
-  getAndDisplaySortedWords()
+  try {
+    const sortOrder = sortingOptionsHandler.extractSortOrderValue(event)
+    sortingOptionsHandler.setSortOrder(sortOrder)
+    getAndDisplaySortedWords()
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 DOM_Ref.skipDuplicatesDiv.addEventListener('click', () => {
-  getAndDisplaySortedWords()
+  try {
+    getAndDisplaySortedWords()
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 /* --------------- EXPORTED FUNCTIONS --------------- */

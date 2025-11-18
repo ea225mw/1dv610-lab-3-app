@@ -1,21 +1,25 @@
-import * as DOM_Ref from './DOM_References.js'
 import { setCleanedTextToAnalyzeToEmptyString } from './index.js'
 import { allDataHolders } from './index.js'
 
 export class Resetter {
+  #DOM_Ref
+  constructor(DOM_Ref) {
+    this.#DOM_Ref = DOM_Ref
+  }
+
   emptyEditAreaAndCleanedString() {
-    DOM_Ref.editArea.innerHTML = ''
+    this.#DOM_Ref.editArea.innerHTML = ''
     setCleanedTextToAnalyzeToEmptyString()
   }
 
   resetStatistics() {
     this.#resetDataholders()
-    DOM_Ref.phraseCountResultDiv.textContent = ''
-    DOM_Ref.sortedWordsDiv.innerHTML = ''
-    DOM_Ref.numberOfWordsDiv.textContent = ''
-    DOM_Ref.numberOfLettersDiv.textContent = ''
-    DOM_Ref.phraseCountResultDiv.textContent = ''
-    DOM_Ref.phraseInput.value = ''
+    this.#DOM_Ref.phraseCountResultDiv.textContent = ''
+    this.#DOM_Ref.sortedWordsDiv.innerHTML = ''
+    this.#DOM_Ref.numberOfWordsDiv.textContent = ''
+    this.#DOM_Ref.numberOfLettersDiv.textContent = ''
+    this.#DOM_Ref.phraseCountResultDiv.textContent = ''
+    this.#DOM_Ref.phraseInput.value = ''
   }
 
   #resetDataholders() {

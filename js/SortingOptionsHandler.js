@@ -1,8 +1,12 @@
-import { skipDuplicatesCheckbox } from './DOM_References.js'
 import { setAscendingOrder } from './index.js'
 import { ascendingOrder } from './index.js'
 
 export class SortingOptionsHandler {
+  #DOM_Ref
+  constructor(DOM_Ref) {
+    this.#DOM_Ref = DOM_Ref
+  }
+
   extractSortOrderValue(event) {
     const targetDiv = event.target.closest('div')
     if (targetDiv !== null) {
@@ -19,7 +23,7 @@ export class SortingOptionsHandler {
   }
 
   isSkipDuplicatesChecked() {
-    if (skipDuplicatesCheckbox.checked) return true
+    if (this.#DOM_Ref.skipDuplicatesCheckbox.checked) return true
     else return false
   }
 }
