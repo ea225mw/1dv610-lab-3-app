@@ -10,14 +10,22 @@ const resetter = new Resetter(DOM_Ref)
 const sortingOptionsHandler = new SortingOptionsHandler(DOM_Ref)
 const stringAnalyzer = new StringAnalyzer()
 
-export let ascendingOrder = true
+let shortestWordObject
+let longestWordObject
+let mostFrequentLetterObject
+let mostFrequentLetterCaseSensObject
+let numberOfWords
+let numberOfTotalLetters
+
 let cleanedTextToAnalyze = ''
+export let ascendingOrder = true
 export const allDataHolders = document.querySelectorAll('td.dataholder')
 
 /* --------------- EVENT LISTENERS ----------------- */
 DOM_Ref.editArea.addEventListener('input', () => {
   try {
     updateCleanedTextToAnalyze()
+    analyzeTextInRealtime()
     updateHTMLElementsInRealtime()
     getAndDisplaySortedWords()
   } catch (error) {
@@ -87,23 +95,21 @@ function removeHtmlAndKeepPureText() {
     .replace(/&nbsp/g, '')
 }
 
+function analyzeTextInRealtime() {
+  shortestWordObject = stringAnalyzer.findShortestWord(cleanedTextToAnalyze)
+  longestWordObject = stringAnalyzer.findLongestWord(cleanedTextToAnalyze)
+  mostFrequentLetterObject = stringAnalyzer.findMostFrequentLetter(cleanedTextToAnalyze)
+  mostFrequentLetterCaseSensObject = stringAnalyzer.findMostFrequentLetterCaseSens(cleanedTextToAnalyze)
+  numberOfWords = stringAnalyzer.countWords(cleanedTextToAnalyze.trim())
+  numberOfTotalLetters = stringAnalyzer.countTotalLetters(cleanedTextToAnalyze)
+}
+
 function updateHTMLElementsInRealtime() {
-  const shortestWordObject = stringAnalyzer.findShortestWord(cleanedTextToAnalyze)
   viewHandler.updateShortestWordInTable(shortestWordObject)
-
-  const longestWordObject = stringAnalyzer.findLongestWord(cleanedTextToAnalyze)
   viewHandler.updateLongestWordInTable(longestWordObject)
-
-  const mostFrequentLetterObject = stringAnalyzer.findMostFrequentLetter(cleanedTextToAnalyze)
   viewHandler.updateMostFrequentLetterInTable(mostFrequentLetterObject)
-
-  const mostFrequentLetterCaseSensObject = stringAnalyzer.findMostFrequentLetterCaseSens(cleanedTextToAnalyze)
   viewHandler.updateMostFrequentLetterCaseSensInTable(mostFrequentLetterCaseSensObject)
-
-  const numberOfWords = stringAnalyzer.countWords(cleanedTextToAnalyze.trim())
   viewHandler.updateWordCount(numberOfWords)
-
-  const numberOfTotalLetters = stringAnalyzer.countTotalLetters(cleanedTextToAnalyze)
   viewHandler.updateTotalLetterCount(numberOfTotalLetters)
 }
 
