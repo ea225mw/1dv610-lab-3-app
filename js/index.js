@@ -84,6 +84,12 @@ function updateCleanedTextToAnalyze() {
   }
 }
 
+function hasEditAreaOnlyEmptyElements() {
+  const possibleHtmlLeftovers = ['<br>', '<br/>', '<div><br></div>', '<p><br></p>']
+  const contentInEditArea = DOM_Ref.editArea.innerHTML.trim()
+  return possibleHtmlLeftovers.some((element) => element === contentInEditArea)
+}
+
 function removeHtmlAndKeepPureText() {
   const textWithHtmlTags = DOM_Ref.editArea.innerHTML
   return textWithHtmlTags
@@ -113,17 +119,11 @@ function updateHTMLElementsInRealtime() {
   viewHandler.updateTotalLetterCount(numberOfTotalLetters)
 }
 
-function hasEditAreaOnlyEmptyElements() {
-  const possibleHtmlLeftovers = ['<br>', '<br/>', '<div><br></div>', '<p><br></p>']
-  const contentInEditArea = DOM_Ref.editArea.innerHTML.trim()
-  return possibleHtmlLeftovers.some((element) => element === contentInEditArea)
-}
-
 function submitPhraseCountForm() {
   if (cleanedTextToAnalyze !== '' || editArea.textContent !== '') {
     const phrase = DOM_Ref.phraseInput.value
-    const numberOfOccurances = stringAnalyzer.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
-    viewHandler.updatePhraseCountResult(numberOfOccurances, phrase)
+    const numberOfOccurrences = stringAnalyzer.countSpecifiedPhrase(cleanedTextToAnalyze, phrase)
+    viewHandler.updatePhraseCountResult(numberOfOccurrences, phrase)
   }
 }
 

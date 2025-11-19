@@ -24,7 +24,7 @@ export class ViewHandler {
     if (mostFrequentLetterObject.length > 0) {
       const preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterObject)
       this.#DOM_Ref.mostFrequentLetterTD.textContent = preparedObjectData.concatString
-      this.#DOM_Ref.mostFrequentLetterAmountTD.textContent = preparedObjectData.occurances
+      this.#DOM_Ref.mostFrequentLetterAmountTD.textContent = preparedObjectData.occurrences
     }
   }
 
@@ -32,12 +32,12 @@ export class ViewHandler {
     if (mostFrequentLetterCaseSensObject.length > 0) {
       const preparedObjectData = this.#prepareFrequentLetterData(mostFrequentLetterCaseSensObject)
       this.#DOM_Ref.mostFrequentLetterCS_TD.textContent = preparedObjectData.concatString
-      this.#DOM_Ref.mostFrequentLetterAmountCS_TD.textContent = preparedObjectData.occurances
+      this.#DOM_Ref.mostFrequentLetterAmountCS_TD.textContent = preparedObjectData.occurrences
     }
   }
 
-  updatePhraseCountResult(numberOfOccurances, phrase) {
-    this.#DOM_Ref.phraseCountResultDiv.textContent = `The phrase \"${phrase}\" occurs ${numberOfOccurances} times.`
+  updatePhraseCountResult(numberOfOccurrences, phrase) {
+    this.#DOM_Ref.phraseCountResultDiv.textContent = `The phrase \"${phrase}\" occurs ${numberOfOccurrences} times.`
   }
 
   updateSortedWords(sortedWordsArray) {
@@ -75,15 +75,15 @@ export class ViewHandler {
 
   #prepareFrequentLetterData(object) {
     let concatString = ''
-    let occurances
+    let occurrences
 
     object.forEach((element) => {
       for (const [key, value] of Object.entries(element)) {
         concatString += key + ', '
-        occurances = value
+        occurrences = value
       }
     })
-    return { concatString: concatString.slice(0, -2), occurances: occurances }
+    return { concatString: concatString.slice(0, -2), occurrences: occurrences }
   }
 
   #prepareTableText(array) {
