@@ -18,7 +18,7 @@ aside {
 
 #gridWrapper {
   display: grid;
-  grid-template-columns: auto 300px 45rem 45rem auto; /* Left margin / Aside / Column 1 / Column 2 / Right margin */
+  grid-template-columns: auto 16.5rem 45rem 45rem auto; /* Left margin / Aside / Column 1 / Column 2 / Right margin */
   grid-template-rows: auto 22rem auto; /* Header / Row 1 / Row 2*/
   gap: 2rem 2rem;
 }
@@ -127,7 +127,8 @@ input[type='radio'] {
 #phraseCountDiv {
   grid-column: 3;
   grid-row: 4;
-  max-height: 200px;
+  /*max-height: 200px;*/
+  align-self: start;
 }
 
 .flexDirectionRow {
