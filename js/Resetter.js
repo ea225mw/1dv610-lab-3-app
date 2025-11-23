@@ -1,15 +1,12 @@
-import { setCleanedTextToAnalyzeToEmptyString } from './index.js'
-import { allDataHolders } from './index.js'
-
 export class Resetter {
   #DOM_Ref
+
   constructor(DOM_Ref) {
     this.#DOM_Ref = DOM_Ref
   }
 
   emptyEditAreaAndCleanedString() {
     this.#DOM_Ref.editArea.innerHTML = ''
-    setCleanedTextToAnalyzeToEmptyString()
   }
 
   resetStatistics() {
@@ -23,6 +20,6 @@ export class Resetter {
   }
 
   #resetDataholders() {
-    allDataHolders.forEach((dataholder) => (dataholder.textContent = ''))
+    this.#DOM_Ref.allDataHolders.forEach((dataholder) => (dataholder.textContent = ''))
   }
 }

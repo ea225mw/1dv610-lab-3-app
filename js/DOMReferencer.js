@@ -26,4 +26,6 @@ export class DOMReferencer {
   phraseCountForm = document.querySelector('#phraseCountForm')
   phraseInput = document.querySelector('#phraseInput')
   phraseCountResultDiv = document.querySelector('#phraseCountResultDiv')
+
+  allDataHolders = document.querySelectorAll('td.dataholder')
 }

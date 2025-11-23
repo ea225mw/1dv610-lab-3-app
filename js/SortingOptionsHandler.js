@@ -1,8 +1,7 @@
-import { setAscendingOrder } from './index.js'
-import { ascendingOrder } from './index.js'
-
 export class SortingOptionsHandler {
   #DOM_Ref
+  ascendingOrder = true
+
   constructor(DOM_Ref) {
     this.#DOM_Ref = DOM_Ref
   }
@@ -15,10 +14,10 @@ export class SortingOptionsHandler {
   }
 
   setSortOrder(value) {
-    if (value === 'ascending' && ascendingOrder === false) {
-      setAscendingOrder(true)
-    } else if (value === 'descending' && ascendingOrder === true) {
-      setAscendingOrder(false)
+    if (value === 'ascending' && this.ascendingOrder === false) {
+      this.ascendingOrder = true
+    } else if (value === 'descending' && this.ascendingOrder === true) {
+      this.ascendingOrder = false
     }
   }
 

@@ -1,5 +1,6 @@
 export class ViewHandler {
   #DOM_Ref
+
   constructor(DOM_Ref) {
     this.#DOM_Ref = DOM_Ref
   }

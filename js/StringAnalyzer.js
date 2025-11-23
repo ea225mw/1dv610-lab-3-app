@@ -1,7 +1,6 @@
-import { isSkipDuplicatesChecked } from './index.js'
-
 export class StringAnalyzer {
   #sw
+  skipDuplicates = true
 
   constructor() {
     this.#loadStringWorksModule()
@@ -38,8 +37,7 @@ export class StringAnalyzer {
   }
 
   sortWordsAscending(cleanedTextToAnalyze) {
-    const skipDuplicates = isSkipDuplicatesChecked()
-    if (skipDuplicates) {
+    if (this.skipDuplicates) {
       const uniqueWords = new Set()
       const sortedWords = this.#sw.sortWordsAscending(cleanedTextToAnalyze)
       for (const word of sortedWords) {
@@ -51,8 +49,7 @@ export class StringAnalyzer {
   }
 
   sortWordsDescending(cleanedTextToAnalyze) {
-    const skipDuplicates = isSkipDuplicatesChecked()
-    if (skipDuplicates) {
+    if (this.skipDuplicates) {
       const uniqueWords = new Set()
       const sortedWords = this.#sw.sortWordsDescending(cleanedTextToAnalyze)
       for (const word of sortedWords) {
