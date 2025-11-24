@@ -13,8 +13,8 @@ export class Resetter {
     this.#resetDataholders()
     this.#DOM_Ref.phraseCountResultDiv.textContent = ''
     this.#DOM_Ref.sortedWordsDiv.innerHTML = ''
-    this.#DOM_Ref.numberOfWordsDiv.textContent = ''
-    this.#DOM_Ref.numberOfLettersDiv.textContent = ''
+    this.#DOM_Ref.numberOfWordsDiv.textContent = '0'
+    this.#DOM_Ref.numberOfLettersDiv.textContent = '0'
     this.#DOM_Ref.phraseCountResultDiv.textContent = ''
     this.#DOM_Ref.phraseInput.value = ''
   }

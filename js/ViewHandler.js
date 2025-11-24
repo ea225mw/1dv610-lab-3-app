@@ -49,10 +49,10 @@ export class ViewHandler {
       p.textContent = element
       allCreatedPTags.push(p)
     })
-    this.organizePTags(allCreatedPTags)
+    this.#organizePTags(allCreatedPTags)
   }
 
-  organizePTags(allCreatedPTags) {
+  #organizePTags(allCreatedPTags) {
     let maximumPTagsInDiv = 15
     const div = document.createElement('div')
 

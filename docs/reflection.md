@@ -1,15 +1,56 @@
 # Kapitelreflektioner L3, Emanuel Andersen (ea225mw)
 
+## Meaningful Names
+
+Av alla kapitel i bokan är detta med namngivning är det som har varit lättast att ta till sig, och jag har märkt stor skillnad i min förståelse av min egen kod efter att ha övat ett tag. Jag har blivit mindre rädd för att använda mig av långa namn på variabler och funktioner under denna kurs. Jag lägger relativt mycket tid på namngivningen och ändrar ofta när jag kommer på bättre alternativ. Namnen är i hög grad sökbara och lätta att uttala. Funktioner som returnerar en boolean startar med orden _is_ eller _has_.
+
+```javascript
+// Examples of my naming of variables and methods:
+#hasEditAreaOnlyEmptyElements()
+#setupSortOrderChoiceDivEventListener()
+#cleanedTextToAnalyze
+isSkipDuplicatesChecked()
+```
+
+## Functions
+
+Det har varit en utmaning att få till så små funktioner som boken föreskriver men jag tycler ändå jag lyckats ganska bra. Som längst är funktionerna i appen runt 10-11 rader men oftast kortare. Jag har bättre förstått detta med olika abstraktionsnivåer och försöker att hålla samma nivå i metoderna, som i denna:
+
+```javascript
+ #setupEditAreaEventListener() {
+    this.#DOM_Ref.editArea.addEventListener('input', () => {
+      try {
+        this.#updateCleanedTextToAnalyze()
+        this.#analyzeTextInRealtime()
+        this.#updateHTMLElementsInRealtime()
+        this.#getAndDisplaySortedWords()
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  }
+```
+
+Att en funktion bara ska göra en sak blir ofta en defenitionsfråga. Jag har denna funktion som återställer olika HTML-element. Jag tycker de känns naturliga att ha i en och samma funktion eftersom de hör ihop på ett naturligt sätt. Att dela upp de enskilda elementens återställning i egna funktioner hade bara blivit rörigt.
+
+```javascript
+// Resetter.js
+  resetStatistics() {
+    this.#resetDataholders()
+    this.#DOM_Ref.phraseCountResultDiv.textContent = ''
+    this.#DOM_Ref.sortedWordsDiv.innerHTML = ''
+    this.#DOM_Ref.numberOfWordsDiv.textContent = '0'
+    this.#DOM_Ref.numberOfLettersDiv.textContent = '0'
+    this.#DOM_Ref.phraseCountResultDiv.textContent = ''
+    this.#DOM_Ref.phraseInput.value = ''
+  }
+```
+
 ## Comments
 
 Jag upptäckte att jag hade en kommentar som ljög, vilket boken menar är den stora faran med kommentarer. Kommentaren beskrev import av objekt från en viss fil men under kodandets gång hade de importerade objekten flyttat till en annan fil utan att kommentaren hade uppdaterats.
 
-<img src="../images/Skärmavbild 2025-10-22 kl. 10.28.30.png" width="70%">
-
-Jag använder **Position markers** i appens index.js, vilket bryter mot bokens regler. Jag tycker att de fyller en funktion när modulen börjar bli lite längre även om man då kan hävda att man då borde bryta ut kod i en ny modul.
-
-<img src="../images/Skärmavbild 2025-10-22 kl. 10.33.05.png" width="45%">
-<br><br>
+<img src="../images/Skärmavbild 2025-10-22 kl. 10.28.30.png" width="70%"><br>
 
 En intressant iakttagelse jag gör är att kodstandarden i några av första årets kurser bryter mot **Mandated Comments**.
 
@@ -59,11 +100,11 @@ Om funktioner anropar andra funktioner bör dessa ligga nära varandra. I appens
 
 Vad jag kan se så bryter jag inte mot **Law of Demeter** i min modulkod. Klasserna anropar bara med sina egna metoder samt metoder från Helper.js som finns med som en instansvariabel i övriga klasser.
 
-I appens index.js har jag ett ganska rejält **train wreck** i funktionen `removeHtmlAndKeepPureText()`. De olika `replace`-anropen tvättar bort alla HTML-element inför analys och bearbetning av strängen. Strängen är att betrakta som en datastruktur och därför är inte Law of Demeter tillämplig här och eftersom alla `replace` står på egen rad så blir det någorlunda lättläst.
+I appens Controller.js har jag ett ganska rejält **train wreck** i metoden `#removeHtmlAndKeepPureText()`. De olika `replace`-anropen tvättar bort alla HTML-element inför analys och bearbetning av strängen. Strängen är att betrakta som en datastruktur och därför är inte Law of Demeter tillämplig här och eftersom alla `replace` står på egen rad så blir det någorlunda lättläst.
 
 ```javascript
-// js/index.js in the app code
-function removeHtmlAndKeepPureText() {
+// js/Controller.js in the app code
+#removeHtmlAndKeepPureText() {
   const textWithHtmlTags = DOM_Ref.editArea.innerHTML
   return textWithHtmlTags
     .replace(/<div><br><\/div>/g, '\n')
@@ -103,7 +144,7 @@ async #loadStringWorksModule() {
 
 ## Boundaries
 
-Jag använder inget externt bibliotek i appen förutom min egen modul så mina "boundaries" är begränsade i denna kodbas. All kod körs på klientsidan och min erfarenhet är att externa bibliotek används mindre där än på serversidan. Jag följer bokens regel kring att använda "gränsnära" kod på så få ställen som möjligt, i mitt fall endast i StringAnalyzer.js.
+Jag använder inget externt bibliotek i appen förutom min egen modul så mina "boundaries" är begränsade i denna kodbas. All kod körs på klientsidan och min erfarenhet är att externa bibliotek används mindre där än på serversidan. Jag följer bokens regel kring att använda "gränsnära" kod på så få ställen som möjligt, i mitt fall endast i appens StringAnalyzer.js där min egen modul hämtas.
 
 ## Unit Tests
 
@@ -120,36 +161,32 @@ Efter att ha läst kapitlet och begrundat skräckexemplet med utvecklarna som sl
 
 ## Classes
 
-Jag tycker det är svårt att tänka i klasser i frontend på det sätt jag gjorde applikationen nu (en enda html-fil som importerar index.js). Jag började skriva all kod i index.js och allt eftersom bröt jag ut funktioner och variabler till egna klasser. Men under hela applikationens framväxt funderade jag på vad en egen klass har för fördelar i aktuell design jämfört med att bara lägga funktionalitet som hör ihop i egna JS-filer, utan att skapa en klass. Fördelen med en klass är att man kan styra inkapslingen enkelt med `#` men samma sak går ju att uppnå i en JS-fil genom att inte sätta ut `export` framför variabler och funktioner. Från början hade jag alla referenser till DOM-element som exporterade variabler i en vanlig JS-fil men gjorde sedan om det till en `DOMReferencer`-klass.
-De fem klasser som applikationen använder har ett avgränsat ansvarsområde (**high cohesion**) och **low coupling** till varandra. All kommunikation dem emellan går via index.js som blir en sorts Controller.
-
-```javascript
-// index.js in the app code
-import { StringAnalyzer } from './StringAnalyzer.js'
-import { ViewHandler } from './ViewHandler.js'
-import { Resetter } from './Resetter.js'
-import { SortingOptionsHandler } from './SortingOptionsHandler.js'
-import { DOMReferencer } from './DOMReferencer.js'
-```
+Jag tycker det är svårt att tänka i klasser i frontend på det sätt jag gjorde applikationen nu (en enda html-fil som importerar index.js). Jag började skriva all kod i index.js och allt eftersom bröt jag ut funktioner och variabler till egna klasser. Men under hela applikationens framväxt funderade jag på vad en egen klass har för fördelar i aktuell design jämfört med att bara lägga funktionalitet som hör ihop i egna JS-filer, utan att skapa en klass. Fördelen med en klass är att man kan styra inkapslingen enkelt med `#` men samma sak går ju att uppnå i en JS-fil genom att inte sätta ut `export` framför variabler och funktioner.<br><br> Från början hade jag alla referenser till DOM-element som exporterade variabler i en vanlig JS-fil men gjorde sedan om det till en `DOMReferencer`-klass.
+De sex klasser som applikationen använder har ett avgränsat ansvarsområde (**high cohesion**) och i de flesta fall **low coupling** till varandra. Controller har beroenden till alla andra klasser men det är rimligt för en controller.
 
 ## Systems
 
-Jag vet inte hur mycket av ett system min lilla app är när den innehåller fem klasser, en modul och index.js. Men jag gör en variant på **Separation of Main** i index.js där alla objekt som används i applikationen skapas. Jag använder mig också av **Dependency Injection** där jag skickar med ett DOMReferencer-objekt till konstruktorerna av de objekt som är beroende av det.
+Jag vet inte hur mycket av ett system min lilla app är när den innehåller sex klasser, en modul och index.js. Men jag gör en variant på **Separation of Main** i index.js där alla objekt som används i applikationen skapas. Jag använder mig också av **Dependency Injection** där jag skickar med skapade instanser till konstruktorerna av de objekt som är beroende av varandra.
 Jag gick också tillbaka till min modulkod och ändrade även där beroenden till Dependency Injection.
 
 ```javascript
 // index.js in the app code
 const DOM_Ref = new DOMReferencer()
-const viewHandler = new ViewHandler(DOM_Ref)
+const view = new ViewHandler(DOM_Ref)
 const resetter = new Resetter(DOM_Ref)
 const sortingOptionsHandler = new SortingOptionsHandler(DOM_Ref)
+const analyzer = new StringAnalyzer()
+
+const controller = new Controller(DOM_Ref, view, resetter, sortingOptionsHandler, analyzer)
 ```
 
 ```javascript
 //Resetter.js in the app code
 export class Resetter {
   #DOM_Ref
+
   constructor(DOM_Ref) {
     this.#DOM_Ref = DOM_Ref
   }
+}
 ```

@@ -127,8 +127,13 @@ input[type='radio'] {
 #phraseCountDiv {
   grid-column: 3;
   grid-row: 4;
-  /*max-height: 200px;*/
   align-self: start;
+}
+
+#phraseCountResultDiv {
+  color: #e4004b;
+  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
 .flexDirectionRow {

@@ -2,7 +2,7 @@
 
 ## Vision
 
-The idea with String Works Editor is that the user should be able to write or paste a text in a textarea and be able to see statistics about the text in real time, such as shortest and longest words, most frequently used letter and number of words. The editor also offers visualization of these words and letters through color marking in the text. The application can also sort all words alphabetically in both ascending and descending order.
+The idea with String Works Editor is that the user should be able to write or paste a text in a textarea and be able to see statistics about the text in real time, such as shortest and longest words, most frequently used letter and number of words. The application can also sort all words alphabetically in both ascending and descending order. The editor should also offer visualization of these words and letters through color marking in the text.
 
 ## Requirements
 
@@ -10,4 +10,4 @@ The requirements for the application is found in [The Requirements](docs/require
 
 ## Testing
 
-The testing of the application has been done manually. A test report can be found [here](docs/testreport20251119.md).
+The testing of the application has been done manually. The latest test report can be found [here](docs/testreport20251119.md).

@@ -21,10 +21,13 @@ export class Controller {
     this.#sortingOptions = sortingOptions
     this.#analyzer = analyzer
 
-    this.#setupEventListeners()
+    this.#setupEditAreaEventListener()
+    this.#setupPhraseCountFormEventListener()
+    this.#setupSortOrderChoiceDivEventListener()
+    this.#setupSkipDuplicatesEventListener()
   }
 
-  #setupEventListeners() {
+  #setupEditAreaEventListener() {
     this.#DOM_Ref.editArea.addEventListener('input', () => {
       try {
         this.#updateCleanedTextToAnalyze()
@@ -35,7 +38,9 @@ export class Controller {
         console.log(error)
       }
     })
+  }
 
+  #setupPhraseCountFormEventListener() {
     this.#DOM_Ref.phraseCountForm.addEventListener('submit', (event) => {
       try {
         event.preventDefault()
@@ -44,7 +49,9 @@ export class Controller {
         console.log(error)
       }
     })
+  }
 
+  #setupSortOrderChoiceDivEventListener() {
     this.#DOM_Ref.sortOrderChoicesDiv.addEventListener('click', (event) => {
       try {
         const sortOrder = this.#sortingOptions.extractSortOrderValue(event)
@@ -54,16 +61,22 @@ export class Controller {
         console.log(error)
       }
     })
+  }
 
+  #setupSkipDuplicatesEventListener() {
     this.#DOM_Ref.skipDuplicatesDiv.addEventListener('click', () => {
       try {
-        let skipDuplicates = this.#sortingOptions.isSkipDuplicatesChecked()
-        this.#analyzer.skipDuplicates = skipDuplicates
+        this.#handleSkipDuplicatesChoice()
         this.#getAndDisplaySortedWords()
       } catch (error) {
         console.log(error)
       }
     })
+  }
+
+  #handleSkipDuplicatesChoice() {
+    let skipDuplicates = this.#sortingOptions.isSkipDuplicatesChecked()
+    this.#analyzer.skipDuplicates = skipDuplicates
   }
 
   #updateCleanedTextToAnalyze() {
@@ -104,12 +117,14 @@ export class Controller {
   }
 
   #updateHTMLElementsInRealtime() {
-    this.#view.updateShortestWordInTable(this.#shortestWordObject)
-    this.#view.updateLongestWordInTable(this.#longestWordObject)
-    this.#view.updateMostFrequentLetterInTable(this.#mostFrequentLetterObject)
-    this.#view.updateMostFrequentLetterCaseSensInTable(this.#mostFrequentLetterCaseSensObject)
-    this.#view.updateWordCount(this.#numberOfWords)
-    this.#view.updateTotalLetterCount(this.#numberOfTotalLetters)
+    if (this.#cleanedTextToAnalyze !== '') {
+      this.#view.updateShortestWordInTable(this.#shortestWordObject)
+      this.#view.updateLongestWordInTable(this.#longestWordObject)
+      this.#view.updateMostFrequentLetterInTable(this.#mostFrequentLetterObject)
+      this.#view.updateMostFrequentLetterCaseSensInTable(this.#mostFrequentLetterCaseSensObject)
+      this.#view.updateWordCount(this.#numberOfWords)
+      this.#view.updateTotalLetterCount(this.#numberOfTotalLetters)
+    }
   }
 
   #submitPhraseCountForm() {
